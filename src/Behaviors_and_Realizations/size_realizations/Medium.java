@@ -1,6 +1,6 @@
-package behaviors_and_realizations.size_realizations;
+package Behaviors_and_Realizations.size_realizations;
 
-import behaviors_and_realizations.SizeBehavior;
+import Behaviors_and_Realizations.SizeBehavior;
 
 public class Medium implements SizeBehavior {
     @Override

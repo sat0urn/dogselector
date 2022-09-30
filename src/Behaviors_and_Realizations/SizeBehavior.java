@@ -1,4 +1,4 @@
-package behaviors_and_realizations;
+package Behaviors_and_Realizations;
 
 public interface SizeBehavior {
     String size();

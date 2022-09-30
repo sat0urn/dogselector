@@ -1,6 +1,6 @@
-package behaviors_and_realizations.Intellect_realizations;
+package Behaviors_and_Realizations.Intellect_realizations;
 
-import behaviors_and_realizations.IntellectBehavior;
+import Behaviors_and_Realizations.IntellectBehavior;
 
 public class Trained implements IntellectBehavior {
     @Override

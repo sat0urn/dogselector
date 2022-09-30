@@ -1,6 +1,6 @@
-package behaviors_and_realizations.lifestyle_realizations;
+package Behaviors_and_Realizations.lifestyle_realizations;
 
-import behaviors_and_realizations.LifestyleBehavior;
+import Behaviors_and_Realizations.LifestyleBehavior;
 
 public class Domestic implements LifestyleBehavior {
     @Override

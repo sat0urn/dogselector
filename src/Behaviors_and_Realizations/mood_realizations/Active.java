@@ -1,6 +1,6 @@
-package behaviors_and_realizations.mood_realizations;
+package Behaviors_and_Realizations.mood_realizations;
 
-import behaviors_and_realizations.MoodBehavior;
+import Behaviors_and_Realizations.MoodBehavior;
 
 public class Active implements MoodBehavior {
     @Override
