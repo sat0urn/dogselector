@@ -9,14 +9,10 @@ public class Client implements Observer {
     private String date;
 
     private static final DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
-    public Client(String dogBayer, String dogSpeecy) {
+    public Client(String dogBayer, String dogSpeecy, String date) {
         this.dogBayer = dogBayer;
         this.dogSpeecy = dogSpeecy;
-        Date currentDate = new Date();
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(currentDate);
-        calendar.add(Calendar.DAY_OF_MONTH,14);
-        this.date = dateFormat.format(calendar.getTime());
+        this.date = date;
     }
 
     @Override

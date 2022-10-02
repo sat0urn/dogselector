@@ -6,14 +6,19 @@ import java.util.logging.Logger;
 
 public class DogAcquisition implements Observable {
 
+    private final String url = "jdbc:postgresql://localhost:5432/dogacquisition";
+    private final String name = "postgres";
+    private final String password = "1234";
+
     List<Observer> observers = new ArrayList<>();
 
     public DogAcquisition() {
-        try (Connection con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/dogacquisition", "postgres", "1234");
+        try (Connection con = DriverManager.getConnection(url, name, password);
              PreparedStatement st = con.prepareStatement("SELECT * FROM clients");
              ResultSet rs = st.executeQuery()) {
             while (rs.next()) {
-                Client client = new Client(rs.getString("user_name"), rs.getString("dog_speecy"));
+                Client client = new Client(rs.getString("user_name"),
+                        rs.getString("dog_speecy"), rs.getString("date"));
                 observers.add(client);
             }
         } catch (SQLException ex) {
@@ -25,7 +30,7 @@ public class DogAcquisition implements Observable {
     @Override
     public void registerObserver(Observer o) {
         observers.add(o);
-        try (Connection con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/dogacquisition", "postgres", "1234");
+        try (Connection con = DriverManager.getConnection(url, name, password);
              Statement st = con.createStatement()) {
             Client client = (Client) o;
             String query = "INSERT INTO clients VALUES (\'" + client.getDogBayer() + "\', \'"
@@ -40,7 +45,7 @@ public class DogAcquisition implements Observable {
     @Override
     public void removeObserver(Observer o) {
         observers.remove(o);
-        try (Connection con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/dogacquisition", "postgres", "1234");
+        try (Connection con = DriverManager.getConnection(url, name, password);
              Statement st = con.createStatement()) {
             Client client = (Client) o;
             String query = "DELETE FROM clients WHERE user_name = \'" + client.getName() + "\'";

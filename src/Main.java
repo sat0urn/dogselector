@@ -10,10 +10,7 @@ import Behaviors_and_Realizations.size_realizations.Big;
 import Behaviors_and_Realizations.size_realizations.Medium;
 import Behaviors_and_Realizations.size_realizations.Small;
 
-import java.sql.*;
 import java.util.Scanner;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class Main {
     public static void main(String[] args) {
@@ -140,11 +137,18 @@ public class Main {
                     String first_name = scan.nextLine();
                     System.out.print("Last name: ");
                     String last_name = scan.nextLine();
+                    System.out.println();
+                    System.out.println("MESSAGE FOR ADMIN");
+                    System.out.println();
+                    System.out.println(first_name + " " + last_name + " is waiting for " + dog.getDogIs().getDogSpeecy() +
+                            " , what date dog will be available to pick up?");
+                    System.out.print("Date: ");
+                    String date = scan.nextLine();
 
                     System.out.println("----------------------------------------");
                     DogAcquisition dogAcquisition = new DogAcquisition();
                     String user_name = last_name + " " + first_name;
-                    Client client = new Client(user_name, dog.getDogIs().getDogSpeecy());
+                    Client client = new Client(user_name, dog.getDogIs().getDogSpeecy(), date);
 
                     dogAcquisition.registerObserver(client);
                     dogAcquisition.notifyObservers();
