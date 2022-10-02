@@ -7,4 +7,9 @@ public class Domestic implements LifestyleBehavior {
     public String lifestyle() {
         return "DOMESTIC";
     }
+
+    @Override
+    public boolean lifestyle(String lifestyle) {
+        return lifestyle().equals(lifestyle);
+    }
 }

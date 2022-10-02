@@ -7,4 +7,9 @@ public class NoTrained implements IntellectBehavior {
     public String intellect() {
         return "NOTRAINED";
     }
+
+    @Override
+    public boolean intellect(String intellect) {
+        return intellect().equals(intellect);
+    }
 }

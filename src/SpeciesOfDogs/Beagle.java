@@ -8,9 +8,6 @@ import Behaviors_and_Realizations.size_realizations.Medium;
 public class Beagle extends Dog {
     private final String dogSpeecy = "Beagle";
 
-    public String getDogSpeecy() {
-        return this.dogSpeecy;
-    }
     @Override
     public void display() {
         System.out.println("You should peek Beagle");
@@ -19,5 +16,10 @@ public class Beagle extends Dog {
                 "2. " + new Medium().size() + "\n" +
                 "3. " + new Active().mood() + "\n" +
                 "4. " + new Domestic().lifestyle());
+    }
+
+    @Override
+    public String getDogSpeecy() {
+        return this.dogSpeecy;
     }
 }

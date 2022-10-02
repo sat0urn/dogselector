@@ -1,3 +1,4 @@
 public interface Observer {
-    void update(String full_name);
+    void update();
+    String getName();
 }

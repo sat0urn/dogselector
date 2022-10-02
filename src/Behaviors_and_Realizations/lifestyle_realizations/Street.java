@@ -7,4 +7,9 @@ public class Street implements LifestyleBehavior {
     public String lifestyle() {
         return "STREET";
     }
+
+    @Override
+    public boolean lifestyle(String lifestyle) {
+        return lifestyle().equals(lifestyle);
+    }
 }

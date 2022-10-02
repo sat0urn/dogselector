@@ -7,4 +7,9 @@ public class Small implements SizeBehavior {
     public String size() {
         return "SMALL";
     }
+
+    @Override
+    public boolean size(String size) {
+        return size().equals(size);
+    }
 }

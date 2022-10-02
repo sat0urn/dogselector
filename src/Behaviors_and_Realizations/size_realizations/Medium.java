@@ -7,4 +7,9 @@ public class Medium implements SizeBehavior {
     public String size() {
         return "MEDIUM";
     }
+
+    @Override
+    public boolean size(String size) {
+        return size().equals(size);
+    }
 }

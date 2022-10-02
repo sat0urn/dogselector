@@ -8,10 +8,6 @@ import Behaviors_and_Realizations.size_realizations.Big;
 public class Labrador extends Dog {
     private final String dogSpeecy = "Labrador";
 
-    public String getDogSpeecy() {
-        return this.dogSpeecy;
-    }
-
     @Override
     public void display() {
         System.out.println("You should peek Labrador");
@@ -20,5 +16,10 @@ public class Labrador extends Dog {
                 "2. " + new Big().size() + "\n" +
                 "3. " + new Calm().mood() + "\n" +
                 "4. " + new Domestic().lifestyle());
+    }
+
+    @Override
+    public String getDogSpeecy() {
+        return this.dogSpeecy;
     }
 }

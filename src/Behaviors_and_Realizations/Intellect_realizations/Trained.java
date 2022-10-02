@@ -5,4 +5,9 @@ import Behaviors_and_Realizations.IntellectBehavior;
 public class Trained implements IntellectBehavior {
     @Override
     public String intellect() { return "TRAINED"; }
+
+    @Override
+    public boolean intellect(String intellect) {
+        return intellect().equals(intellect);
+    }
 }

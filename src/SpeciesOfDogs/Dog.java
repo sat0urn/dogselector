@@ -1,54 +1,48 @@
 package SpeciesOfDogs;
 
 import Behaviors_and_Realizations.*;
-import Behaviors_and_Realizations.Intellect_realizations.NoTrained;
-import Behaviors_and_Realizations.Intellect_realizations.Trained;
-import Behaviors_and_Realizations.lifestyle_realizations.Domestic;
-import Behaviors_and_Realizations.lifestyle_realizations.Street;
-import Behaviors_and_Realizations.mood_realizations.Active;
-import Behaviors_and_Realizations.mood_realizations.Aggressive;
-import Behaviors_and_Realizations.mood_realizations.Calm;
-import Behaviors_and_Realizations.size_realizations.Big;
-import Behaviors_and_Realizations.size_realizations.Medium;
-import Behaviors_and_Realizations.size_realizations.Small;
 
 public abstract class Dog {
 
     public abstract void display();
+    public abstract String getDogSpeecy();
 
     private IntellectBehavior intellectBehavior;
     private SizeBehavior sizeBehavior;
     private MoodBehavior moodBehavior;
     private LifestyleBehavior lifestyleBehavior;
+    private Dog dogIs;
 
-    public void defineTypeOfDog(String[] dogs) {
-        if (dogs[0].equals(new Calm().mood()) &&
-            dogs[1].equals(new Big().size()) &&
-            dogs[2].equals(new Domestic().lifestyle()) &&
-            dogs[3].equals(new Trained().intellect()))
+    public void defineTypeOfDog() {
+        if (intellectBehavior.intellect("TRAINED") && sizeBehavior.size("BIG") &&
+            moodBehavior.mood().equals("CALM") && lifestyleBehavior.lifestyle("DOMESTIC")) {
+            dogIs = new Labrador();
             new Labrador().display();
-        else if (dogs[0].equals(new Aggressive().mood()) &&
-                dogs[1].equals(new Small().size()) &&
-                dogs[2].equals(new Domestic().lifestyle()) &&
-                dogs[3].equals(new NoTrained().intellect()))
-            new Spitz().display();
-        else if (dogs[0].equals(new Calm().mood()) &&
-                dogs[1].equals(new Medium().size()) &&
-                dogs[2].equals(new Domestic().lifestyle()) &&
-                dogs[3].equals(new Trained().intellect()))
-            new Corgi().display();
-        else if (dogs[0].equals(new Active().mood()) &&
-                dogs[1].equals(new Medium().size()) &&
-                dogs[2].equals(new Domestic().lifestyle()) &&
-                dogs[3].equals(new Trained().intellect()))
+        }
+        else if (intellectBehavior.intellect("TRAINED") && sizeBehavior.size("MEDIUM") &&
+                moodBehavior.mood("ACTIVE") && lifestyleBehavior.lifestyle("DOMESTIC")) {
+            dogIs = new Beagle();
             new Beagle().display();
-        else if (dogs[0].equals(new Aggressive().mood()) &&
-                dogs[1].equals(new Big().size()) &&
-                dogs[2].equals(new Street().lifestyle()) &&
-                dogs[3].equals(new Trained().intellect()))
+        }
+        else if (intellectBehavior.intellect("TRAINED") && sizeBehavior.size("MEDIUM") &&
+                moodBehavior.mood("CALM") && lifestyleBehavior.lifestyle("DOMESTIC")) {
+            dogIs = new Corgi();
+            new Corgi().display();
+        }
+        else if (intellectBehavior.intellect("NOTRAINED") && sizeBehavior.size("SMALL") &&
+                moodBehavior.mood("AGGRESSIVE") && lifestyleBehavior.lifestyle("DOMESTIC")) {
+            dogIs = new Spitz();
+            new Spitz().display();
+        }
+        else if (intellectBehavior.intellect("TRAINED") && sizeBehavior.size("BIG") &&
+                moodBehavior.mood("AGGRESSIVE") && lifestyleBehavior.lifestyle("STREET")) {
+            dogIs = new Doberman();
             new Doberman().display();
-        else
+        }
+        else {
+            dogIs = null;
             System.out.println("We don't have that dog, sorry...");
+        }
     }
 
     public void setIntellectBehavior(IntellectBehavior intellectBehavior) {
@@ -78,4 +72,6 @@ public abstract class Dog {
     public String getLifestyleBehavior() {
         return this.lifestyleBehavior.lifestyle();
     }
+
+    public Dog getDogIs() { return this.dogIs; }
 }
