@@ -1,7 +1,8 @@
+package Models;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
+import Observer.Observer;
 
 public class Client implements Observer {
     private String dogBayer;
