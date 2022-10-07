@@ -22,22 +22,22 @@ public class UserController {
                 if (rs.getString("login").equals(user.getLogin())) {
                     if (rs.getString("password").equals(user.getPassword())) {
                         if (rs.getString("role").equals("ADMIN")) {
-                            System.out.println("You are in admin account!");
+                            System.out.println("(R) You are in admin account!");
                             this.adminIsLogin = true;
                         } else {
-                            System.out.println("You are in account!");
+                            System.out.println("(L) You are in account!");
                             this.isLogin = true;
                         }
                         return;
                     } else
-                        System.out.println("Wrong password!");
+                        System.out.println("(L) Wrong password!");
                 }
             }
         } catch (SQLException ex) {
             Logger lgr = Logger.getLogger(Main.class.getName());
             lgr.log(Level.SEVERE, ex.getMessage(), ex);
         }
-        System.out.println("You don't have an account, please, do registration!");
+        System.out.println("(L) You don't have an account, please, do registration!");
     }
 
     public void register(User user) {
@@ -50,7 +50,7 @@ public class UserController {
 
             while (rs.next()) {
                 if (rs.getString("login").equals(user.getLogin())) {
-                    System.out.println("This login is already have an account!");
+                    System.out.println("(R) This login is already have an account!");
                     hasLogin = true;
                     break;
                 }

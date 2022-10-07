@@ -1,7 +1,5 @@
 package Models;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import Observer.Observer;
 
 public class Client implements Observer {
@@ -9,7 +7,8 @@ public class Client implements Observer {
     private String dogSpeecy;
     private String date;
 
-    private static final DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    public Client() {}
+
     public Client(String dogBayer, String dogSpeecy, String date) {
         this.dogBayer = dogBayer;
         this.dogSpeecy = dogSpeecy;
@@ -25,6 +24,11 @@ public class Client implements Observer {
     @Override
     public String getName() {
         return getDogBayer();
+    }
+
+    @Override
+    public String getDogBreed() {
+        return getDogSpeecy();
     }
 
     public String getDogBayer() {

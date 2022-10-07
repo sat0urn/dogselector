@@ -18,8 +18,16 @@ public class DogAcquisition implements Observable {
 
     @Override
     public void registerObserver(Observer o) {
+        for (Observer observer : observers) {
+            if (observer.getName().equals(o.getName()) &&
+                observer.getDogBreed().equals(o.getDogBreed())) {
+                System.out.println("This client is already has that dog!");
+                return;
+            }
+        }
         observers.add(o);
         clientController.addNewClient(o);
+
     }
 
     @Override

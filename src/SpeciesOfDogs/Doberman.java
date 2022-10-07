@@ -10,7 +10,7 @@ public class Doberman extends Dog {
 
     @Override
     public void display() {
-        System.out.println("You should peek Doberman");
+        System.out.println("You should peek " + dogSpeecy);
         System.out.println(dogSpeecy + " features are \n" +
                 "1. " + new Trained().intellect() + "\n" +
                 "2. " + new Big().size() + "\n" +

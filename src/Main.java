@@ -1,6 +1,7 @@
+import Controllers.ClientController;
 import Controllers.UserController;
-import Decorators.*;
-import Decorators.SelectodDogs.*;
+import Decorator.*;
+import Decorator.SelectodDogs.*;
 import Models.Client;
 import Models.User;
 import Observer.DogAcquisition;
@@ -12,7 +13,6 @@ import Behaviors_and_Realizations.mood_realizations.*;
 import Behaviors_and_Realizations.size_realizations.*;
 
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
@@ -25,6 +25,7 @@ public class Main {
     static boolean adminIsLogin = false;
     static User user;
     static DogAcquisition dogAcquisition = new DogAcquisition();
+    static SelectedDog currentSelectedDog = null;
     static List<SelectedDog> selectedDogList = Arrays.asList(
             new Akita_Inu(), new Beagle(), new Boxer(), new Bulldog(),
             new Chiwawa(), new Corgi(), new Dalmatian(), new Doberman(),
@@ -36,6 +37,7 @@ public class Main {
             @Override
             public void display() {
             }
+
             @Override
             public String getDogSpeecy() {
                 return null;
@@ -45,10 +47,10 @@ public class Main {
         while (true) {
             if (!isLogin && !adminIsLogin) {
                 // LOGIN/REGISTER
-                System.out.println("----------------------------------------");
-                System.out.println("Do you have an account already?");
+                System.out.println("-----------------------------------------------------");
+                System.out.println("           Do you have an account already?           ");
                 System.out.println("YES - y | NO - n | Leave - any character (!= y, != n)");
-                System.out.println("----------------------------------------");
+                System.out.println("-----------------------------------------------------");
                 String hasAccount = scan.next();
                 if (hasAccount.equalsIgnoreCase("y")) {
                     logIn();
@@ -65,22 +67,24 @@ public class Main {
             } else if (isLogin && !adminIsLogin) {
                 while (true) {
                     if (isLogin) {
-                        System.out.println("----------------------------------------");
-                        System.out.println("        Hello " + user.getFirstname() + " " + user.getLastname() + "!");
-                        System.out.println("DOG-SELECTOR APP | Messages | Logout");
-                        System.out.println("       2         |     1    |    0  ");
-                        System.out.println("----------------------------------------");
+                        System.out.println("_----------------------------------------_");
+                        System.out.println("            Hello " + user.getFirstname() + " " + user.getLastname() + "!");
+                        System.out.println("|  DOG-SELECTOR APP | Messages | Logout  |");
+                        System.out.println("|         2         |     1    |    0    |");
+                        System.out.println("_----------------------------------------_");
                         String menu = scan.next();
                         // DOG-SELECTOR
                         if (menu.equalsIgnoreCase("2")) {
-                            System.out.println("Welcome to DogSelector!\nYou need to answer a couple of questions regarding dog behavior");
-                            System.out.println("Let's start!");
+                            System.out.println("_--------------------DOG-SELECTOR-(DG)--------------------_");
+                            System.out.println("(DG) Welcome to DogSelector!\nYou need to answer a couple of questions regarding dog behavior");
+                            System.out.println("(DG) Let's start!");
+                            System.out.println("_---------------------------------------------------------_");
                             while (true) {
                                 boolean gate = false;
-                                System.out.println("----------------------------------------");
-                                System.out.println("Do you prefer more active, aggressive or calm dog?" +
+                                System.out.println("-----------------------------------------------------------");
+                                System.out.println("(DG) Do you prefer more active, aggressive or calm dog?" +
                                         "\nActive - 1, Aggressive - 2, Calm - 3");
-                                System.out.println("----------------------------------------");
+                                System.out.println("-----------------------------------------------------------");
                                 String mood = scan.next();
                                 switch (mood) {
                                     case "1" -> {
@@ -95,16 +99,16 @@ public class Main {
                                         dog.setMoodBehavior(new Calm());
                                         gate = true;
                                     }
-                                    default -> System.out.println("You need to choose between 1 and 3");
+                                    default -> System.out.println("(DG) You need to choose between 1 and 3");
                                 }
                                 if (gate) break;
                             }
                             while (true) {
                                 boolean gate = false;
-                                System.out.println("----------------------------------------");
-                                System.out.println("Pick size of dog that you prefer" +
+                                System.out.println("-----------------------------------------------------------");
+                                System.out.println("(DG) Pick size of dog that you prefer" +
                                         "\nBig - 1, Medium - 2, Small - 3");
-                                System.out.println("----------------------------------------");
+                                System.out.println("-----------------------------------------------------------");
                                 String size = scan.next();
                                 switch (size) {
                                     case "1" -> {
@@ -119,16 +123,16 @@ public class Main {
                                         dog.setSizeBehavior(new Small());
                                         gate = true;
                                     }
-                                    default -> System.out.println("You need to choose between 1 and 3");
+                                    default -> System.out.println("(DG) You need to choose between 1 and 3");
                                 }
                                 if (gate) break;
                             }
                             while (true) {
                                 boolean gate = false;
-                                System.out.println("----------------------------------------");
-                                System.out.println("Do you like street or domestic animal?" +
+                                System.out.println("-----------------------------------------------------------");
+                                System.out.println("(DG) Do you like street or domestic animal?" +
                                         "\nStreet - 1, Domestic - 2");
-                                System.out.println("----------------------------------------");
+                                System.out.println("-----------------------------------------------------------");
                                 String lifestyle = scan.next();
                                 switch (lifestyle) {
                                     case "1" -> {
@@ -139,16 +143,16 @@ public class Main {
                                         dog.setLifestyleBehavior(new Domestic());
                                         gate = true;
                                     }
-                                    default -> System.out.println("You need to choose between 1 and 2");
+                                    default -> System.out.println("(DG) You need to choose between 1 and 2");
                                 }
                                 if (gate) break;
                             }
                             while (true) {
                                 boolean gate = false;
-                                System.out.println("----------------------------------------");
-                                System.out.println("Should dog be trained or not trained?" +
+                                System.out.println("-----------------------------------------------------------");
+                                System.out.println("(DG) Should dog be trained or not trained?" +
                                         "\nTrained - 1, NoTrained - 2");
-                                System.out.println("----------------------------------------");
+                                System.out.println("-----------------------------------------------------------");
                                 String intellect = scan.next();
                                 switch (intellect) {
                                     case "1" -> {
@@ -159,29 +163,50 @@ public class Main {
                                         dog.setIntellectBehavior(new NoTrained());
                                         gate = true;
                                     }
-                                    default -> System.out.println("You need to choose between 1 and 2");
+                                    default -> System.out.println("(DG) You need to choose between 1 and 2");
                                 }
                                 if (gate) break;
                             }
 
-                            System.out.println("----------------------------------------");
+                            System.out.println("-----------------------------------------------------------");
                             dog.defineTypeOfDog();
+                            System.out.println("-----------------------------------------------------------");
+
+                            boolean alreadyHasThatDog = false;
+                            if (dog.getDogIs() != null) {
+                                alreadyHasThatDog = ClientController.hasThatDog(
+                                        user.getFirstname() + " " + user.getLastname(),
+                                        dog.getDogIs().getDogSpeecy());
+                            }
+                            if (alreadyHasThatDog) {
+                                System.out.println();
+                                System.out.println("--------------------------------");
+                                System.out.println("|                              |");
+                                System.out.println("|  You already have that dog!  |");
+                                System.out.println("|                              |");
+                                System.out.println("--------------------------------");
+                                break;
+                            }
 
                             // DOG-BUY
                             if (dog.getDogIs() != null) {
-                                System.out.println("Do you want to buy a " + dog.getDogIs().getDogSpeecy() + " dog?");
-                                System.out.println("YES - y | NO - q or any character");
-                                System.out.println("----------------------------------------");
+                                System.out.println();
+                                System.out.println("_--------------------DOG-BUY-SERVICES-------------------_");
+                                System.out.println("| Do you want to buy a " + dog.getDogIs().getDogSpeecy() + " dog?");
+                                System.out.println("| YES - y | NO - q or any character");
+                                System.out.println("---------------------------------------------------------");
                                 String buyingDog = scan.next();
+
                                 if (buyingDog.equalsIgnoreCase("y")) {
-                                    System.out.println("-----------------------------------------------------------");
-                                    System.out.println("-Ok, we will send you a message with dog acquisition time!-");
-                                    System.out.println("-------------------(Check your messages)-------------------");
-                                    System.out.println("-----------------------------------------------------------");
+                                    System.out.println();
+                                    System.out.println("_---------------------------------------------------------_");
+                                    System.out.println("|Ok, we will send you a message with dog acquisition time!|");
+                                    System.out.println("|-----------------(Check your \"messages\")-----------------|");
+                                    System.out.println("_---------------------------------------------------------_");
+                                    System.out.println();
 
                                     userController.sendMessageToAdmin(user, dog.getDogIs().getDogSpeecy());
 
-                                    SelectedDog currentSelectedDog = null;
                                     for (SelectedDog selectedDog : selectedDogList) {
                                         if (selectedDog.description.equals(dog.getDogIs().getDogSpeecy())) {
                                             currentSelectedDog = selectedDog;
@@ -189,39 +214,40 @@ public class Main {
                                         }
                                     }
 
-                                    System.out.println("What kind of services do you want to take for your selected " +
+                                    System.out.println("| What kind of services do you want to take for your selected " +
                                             dog.getDogIs().getDogSpeecy() + "?");
 
-                                    System.out.println("-----------------------------------------------------------");
-                                    System.out.println("1) Deprivation of reproductive function");
-                                    System.out.println("YES - y | NO - q or any character");
-                                    System.out.println("-----------------------------------------------------------");
+                                    System.out.println("| -----------------------------------------------------------");
+                                    System.out.println("| 1) Deprivation of reproductive function");
+                                    System.out.println("| YES - y | NO - q or any character");
+                                    System.out.println("| -----------------------------------------------------------");
                                     String serviceDeprivation = scan.next();
                                     if (serviceDeprivation.equalsIgnoreCase("y")) {
                                         currentSelectedDog = new DepRecFunc(currentSelectedDog);
                                     }
 
-                                    System.out.println("-----------------------------------------------------------");
-                                    System.out.println("2) Vaccination");
-                                    System.out.println("YES - y | NO - q or any character");
-                                    System.out.println("-----------------------------------------------------------");
+                                    System.out.println("| -----------------------------------------------------------");
+                                    System.out.println("| 2) Vaccination");
+                                    System.out.println("| YES - y | NO - q or any character");
+                                    System.out.println("| -----------------------------------------------------------");
                                     String serviceGrafted = scan.next();
                                     if (serviceGrafted.equalsIgnoreCase("y")) {
                                         currentSelectedDog = new Grafted(currentSelectedDog);
                                     }
 
                                     System.out.println("-----------------------------------------------------------");
-                                    System.out.println("Services: " + currentSelectedDog.getDescription() + "\n"
-                                            + "Cost: $"+ currentSelectedDog.cost());
-                                    System.out.println("-----------------------------------------------------------");
+                                    System.out.println("| Services: " + currentSelectedDog.getDescription() + "\n"
+                                            + "Cost: $" + currentSelectedDog.cost());
 
-                                    System.out.println("Wait a message, our administration will send you an information later!");
+                                    System.out.println("| Wait a message, our administration will send you an information later!");
                                 }
                             }
                         } else if (menu.equalsIgnoreCase("1")) {
-                            System.out.println("Messages: ");
+                            System.out.println("_--------------------MESSAGES-------------------_");
+                            System.out.println("(U) Messages: ");
+                            System.out.println("-------------------------------------------------------------------");
                             dogAcquisition.notifyObserver(user.getFirstname() + " " + user.getLastname());
-                            System.out.println("----------------------------------------");
+                            System.out.println("-------------------------------------------------------------------");
                         } else if (menu.equalsIgnoreCase("0")) {
                             exit();
                         }
@@ -231,40 +257,51 @@ public class Main {
                 }
             } else if (adminIsLogin && !isLogin) {
                 // ADMIN
-                System.out.println("----------------------------------------");
-                System.out.println("ADMIN ACCOUNT");
-                System.out.println("MESSAGES | LOGOUT");
-                System.out.println("   m     |    0  ");
-                System.out.println("----------------------------------------");
+                System.out.println("_----------------------------------------_");
+                System.out.println("|              ADMIN ACCOUNT             |");
+                System.out.println("|            MESSAGES | LOGOUT           |");
+                System.out.println("|               m     |    0             |");
+                System.out.println("_----------------------------------------_");
                 String adminMenu = scan.next();
                 if (adminMenu.equalsIgnoreCase("m")) {
                     String name, surname, dogBreed;
-                    int client_id;
+                    String client_id;
                     int id = 1;
 
                     String[] messages = (String[]) user.getMessages().getArray();
+                    System.out.println("(A) Messages: ");
                     for (String message : messages) {
                         System.out.println(id + ". " + message);
                         id++;
                     }
 
-                    System.out.println("Client id: ");
-                    client_id = scan.nextInt();
-                    String clientString = messages[client_id - 1];
+                    Client client;
 
-                    String[] splittedClientString = clientString.split(" ");
-                    name = splittedClientString[0];
-                    surname = splittedClientString[1];
-                    dogBreed = splittedClientString[5];
+                    while (true) {
+                        try {
+                            System.out.print("(A) Client id: ");
+                            client_id = scan.next();
+                            String clientString = messages[Integer.parseInt(client_id) - 1];
 
-                    System.out.print("Date: ");
-                    String date = scan.next();
+                            String[] splittedClientString = clientString.split(" ");
+                            name = splittedClientString[0];
+                            surname = splittedClientString[1];
+                            dogBreed = splittedClientString[5];
 
-                    String full_name = name + " " + surname;
-                    Client client = new Client(full_name, dogBreed, date);
+                            System.out.print("(A) Date (yyyy-MM-dd): ");
+                            String date = scan.next();
+
+                            String full_name = name + " " + surname;
+                            client = new Client(full_name, dogBreed, date);
+                            break;
+                        } catch (Exception e) {
+                            System.out.println("(A) ID issues or Wrong Date format!");
+                        }
+                    }
 
                     dogAcquisition.registerObserver(client);
-                    dogAcquisition.notifyObservers();
+                    ClientController clientController = new ClientController();
+                    clientController.setServicesAndItsCost(client, currentSelectedDog.getDescription(), currentSelectedDog.cost());
                 } else if (adminMenu.equalsIgnoreCase("0")) {
                     exit();
                 }
@@ -273,38 +310,38 @@ public class Main {
     }
 
     public static void logIn() {
-        System.out.println("----------------------------------------");
         String user_login, user_password;
-        System.out.println("LOGIN");
-        System.out.print("Login: ");
+        System.out.println("-----------------------------------------------------");
+        System.out.println("(L) LOGIN");
+        System.out.println("-----------------------------------------------------");
+        System.out.print("(L) Login: ");
         user_login = scan.next();
-        System.out.print("Password: ");
+        System.out.print("(L) Password: ");
         user_password = scan.next();
 
         user = new User(user_login, user_password);
 
-        System.out.println("----------------------------------------");
         userController.login(user);
 
         user = userController.getUser(user);
     }
 
     public static void registerIn() {
-        System.out.println("----------------------------------------");
         String user_firstname, user_lastname, user_login, user_password;
-        System.out.println("REGISTRATION");
-        System.out.print("Your name: ");
+        System.out.println("-----------------------------------------------------");
+        System.out.println("(R) REGISTRATION");
+        System.out.println("-----------------------------------------------------");
+        System.out.print("(R) Your name: ");
         user_firstname = scan.next();
-        System.out.print("Your surname: ");
+        System.out.print("(R) Your surname: ");
         user_lastname = scan.next();
-        System.out.print("Login: ");
+        System.out.print("(R) Login: ");
         user_login = scan.next();
-        System.out.print("Password: ");
+        System.out.print("(R) Password: ");
         user_password = scan.next();
 
         user = new User(user_firstname, user_lastname, user_login, user_password);
 
-        System.out.println("----------------------------------------");
         userController.register(user);
     }
 

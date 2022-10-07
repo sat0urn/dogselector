@@ -10,7 +10,7 @@ public class Spitz extends Dog {
 
     @Override
     public void display() {
-        System.out.println("You should peek Spitz");
+        System.out.println("You should peek " + dogSpeecy);
         System.out.println(dogSpeecy + " features are \n" +
                 "1. " + new NoTrained().intellect() + "\n" +
                 "2. " + new Small().size() + "\n" +

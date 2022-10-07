@@ -2,6 +2,7 @@ package Controllers;
 
 import DBProperties.DBConfig;
 import Models.Client;
+import Models.User;
 import Observer.Observer;
 import com.sun.tools.javac.Main;
 
@@ -63,28 +64,43 @@ public class ClientController {
         }
     }
 
-   /* public void sendMessageToClient(Observer.Observer o) {
-        try (Connection con = DriverManager.getConnection(Controllers.DBProperties.URL, Controllers.DBProperties.NAME, Controllers.DBProperties.PASSWORD);
+    public void setServicesAndItsCost(Client client, String description, double cost) {
+        try (Connection con = DriverManager.getConnection(DBConfig.URL, DBConfig.NAME, DBConfig.PASSWORD);
              Statement st = con.createStatement()) {
-            Models.Client client = (Models.Client) o;
             ResultSet rs = st.executeQuery("SELECT * FROM clients");
             while (rs.next()) {
-                if (client.getName().equals(rs.getString("dog_buyer")) &&
-                    client.getDogSpeecy().equals(rs.getString("dog_speecy"))) {
-                    String message = client.getName() + " is waiting for " +
-                            client.getDogSpeecy() + ", date to pickup is: " + client.getDate();
-
-                    String[] splits = client.getName().split(" ");
-
-                    String query = "UPDATE users SET messages = array_append(messages, " + message.toString() + ")" +
-                            " WHERE user_firstname = " + splits[0] + " AND WHERE user_lastname = " + splits[1];
-                    st.executeQuery(query);
+                if (rs.getString("dog_buyer").equals(client.getName()) &&
+                    rs.getString("dog_speecy").equals(client.getDogSpeecy())) {
+                    String updateDescription = "UPDATE clients SET description = \'" + description + "\'" + " WHERE dog_speecy = \'" + client.getDogBreed() + "\'";
+                    String updateCost = "UPDATE clients SET cost = \'" + cost + "$\'" + " WHERE dog_speecy = \'" + client.getDogBreed() + "\'";
+                    st.executeUpdate(updateDescription);
+                    st.executeUpdate(updateCost);
+                    System.out.println("Client " + client.getName() + " is waiting for " + client.getDogBreed() + ", " +
+                            "date to pickup is: " + client.getDate());
+                    break;
                 }
             }
         } catch (SQLException ex) {
             Logger lgr = Logger.getLogger(Main.class.getName());
             lgr.log(Level.SEVERE, ex.getMessage(), ex);
         }
-    }*/
+    }
 
+    public static boolean hasThatDog(String dog_buyer, String dog_speecy) {
+        boolean gate = true;
+        try (Connection con = DriverManager.getConnection(DBConfig.URL, DBConfig.NAME, DBConfig.PASSWORD);
+             Statement st = con.createStatement()) {
+            ResultSet rs = st.executeQuery("SELECT * FROM clients");
+            while (rs.next()) {
+                if (rs.getString("dog_buyer").equals(dog_buyer) &&
+                    rs.getString("dog_speecy").equals(dog_speecy)) {
+                    return gate;
+                }
+            }
+        } catch (SQLException ex) {
+            Logger lgr = Logger.getLogger(Main.class.getName());
+            lgr.log(Level.SEVERE, ex.getMessage(), ex);
+        }
+        return !gate;
+    }
 }
