@@ -2,7 +2,6 @@ package Controllers;
 
 import DBProperties.DBConfig;
 import Models.Client;
-import Models.User;
 import Observer.Observer;
 import com.sun.tools.javac.Main;
 
@@ -52,9 +51,8 @@ public class ClientController {
             Client client = (Client) o;
             ResultSet rs = st.executeQuery("SELECT * FROM clients");
             while (rs.next()) {
-                String full_name = rs.getString("user_firstname") + " " + rs.getString("user_lastname");
-                if (full_name.equals(client.getName())) {
-                    String query = "DELETE FROM clients WHERE login = \'" + rs.getString("login") + "\'";
+                if (rs.getString("dog_buyer").equals(client.getName())) {
+                    String query = "DELETE FROM clients WHERE dog_buyer = \'" + rs.getString("dog_buyer") + "\'";
                     st.executeUpdate(query);
                 }
             }

@@ -4,7 +4,7 @@ import Behaviors_and_Realizations.IntellectBehavior;
 
 public class Trained implements IntellectBehavior {
     @Override
-    public String intellect() { return "TRAINED"; }
+    public String intellect() { return "Trained"; }
 
     @Override
     public boolean intellect(String intellect) {

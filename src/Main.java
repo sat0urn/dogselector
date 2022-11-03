@@ -20,17 +20,20 @@ import java.util.Scanner;
 public class Main {
 
     static Scanner scan = new Scanner(System.in);
+
     static UserController userController = new UserController();
     static boolean isLogin = false;
     static boolean adminIsLogin = false;
     static User user;
+
     static DogAcquisition dogAcquisition = new DogAcquisition();
+
     static SelectedDog currentSelectedDog = null;
     static List<SelectedDog> selectedDogList = Arrays.asList(
             new Akita_Inu(), new Beagle(), new Boxer(), new Bulldog(),
             new Chiwawa(), new Corgi(), new Dalmatian(), new Doberman(),
             new Haski(), new Labrador(), new Puddle(), new Pug(),
-            new Samoed(), new Spitz(), new Tax());
+            new Samoed(), new Tax());
 
     public static void main(String[] args) throws SQLException {
         Dog dog = new Dog() {
@@ -222,6 +225,7 @@ public class Main {
                                     System.out.println("| YES - y | NO - q or any character");
                                     System.out.println("| -----------------------------------------------------------");
                                     String serviceDeprivation = scan.next();
+                                    System.out.println("| ");
                                     if (serviceDeprivation.equalsIgnoreCase("y")) {
                                         currentSelectedDog = new DepRecFunc(currentSelectedDog);
                                     }
@@ -230,6 +234,7 @@ public class Main {
                                     System.out.println("| 2) Vaccination");
                                     System.out.println("| YES - y | NO - q or any character");
                                     System.out.println("| -----------------------------------------------------------");
+                                    System.out.println("| ");
                                     String serviceGrafted = scan.next();
                                     if (serviceGrafted.equalsIgnoreCase("y")) {
                                         currentSelectedDog = new Grafted(currentSelectedDog);

@@ -5,7 +5,7 @@ import Behaviors_and_Realizations.SizeBehavior;
 public class Medium implements SizeBehavior {
     @Override
     public String size() {
-        return "MEDIUM";
+        return "Medium";
     }
 
     @Override
